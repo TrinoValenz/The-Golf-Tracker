@@ -7,13 +7,13 @@ public class Hole {
     private int chips;
     private int penalties;
     private boolean greenInRegulation;
-    private String girMiss;
+    private Misses girMiss;
     private boolean fairwayHit;
-    private String fhMiss;
+    private Misses fhMiss;
     private int par;
     private Terms scoreResult;
 
-    public Hole(int holeNumber, int strokes, int putts, int chips, int penalties, boolean greenInRegulation, String girMiss, boolean fairwayHit, String fhMiss, int par) {
+    public Hole(int holeNumber, int strokes, int putts, int chips, int penalties, boolean greenInRegulation, Misses girMiss, boolean fairwayHit, Misses fhMiss, int par) {
         this.holeNumber = holeNumber;
         this.strokes = strokes;
         this.putts = putts;
@@ -26,9 +26,14 @@ public class Hole {
         this.par = par;
     }
 
-    public Hole(int holeNumber, int strokes) {
+    public Hole(int holeNumber, int strokes, int par) {
         this.holeNumber = holeNumber;
         this.strokes = strokes;
+        this.par = par;
+    }
+    //remove this later
+    public Hole(int holeNumber) {
+        this.holeNumber = holeNumber;
     }
 
 
@@ -80,11 +85,11 @@ public class Hole {
         this.greenInRegulation = greenInRegulation;
     }
 
-    public String getGirMiss() {
+    public Misses getGirMiss() {
         return girMiss;
     }
 
-    public void setGirMiss(String girMiss) {
+    public void setGirMiss(Misses girMiss) {
         this.girMiss = girMiss;
     }
 
@@ -96,11 +101,11 @@ public class Hole {
         this.fairwayHit = fairwayHit;
     }
 
-    public String getFhMiss() {
+    public Misses getFhMiss() {
         return fhMiss;
     }
 
-    public void setFhMiss(String fhMiss) {
+    public void setFhMiss(Misses fhMiss) {
         this.fhMiss = fhMiss;
     }
 
@@ -116,25 +121,41 @@ public class Hole {
         return scoreResult;
     }
 
-    public void setScoreResult(Terms scoreResult) {
-        this.scoreResult = scoreResult;
+    public void setScoreResult() {
+        int scoreToPar = strokes - par;
+        Terms term = null;
+        if(strokes==1){
+            term = Terms.HOLE_IN_ONE;
+            this.scoreResult = term;
+        } else {
+            switch (scoreToPar) {
+                case -3 -> term = Terms.ALBATROSS;
+                case -2 -> term = Terms.EAGLE;
+                case -1 -> term = Terms.BIRDIE;
+                case 0 -> term = Terms.PAR;
+                case 1 -> term = Terms.BOGEY;
+                case 2 -> term = Terms.DOUBLE_BOGEY;
+                default -> term = Terms.TRIPLE_BOGEY_OR_WORSE;
+            };
+            this.scoreResult = term;
+        }
     }
 
-    public Terms calculateScore(){
-        int scoreToPar = strokes - par;
-        if(strokes==1){
-            return Terms.HOLE_IN_ONE;
-        }
-
-        return switch (scoreToPar) {
-            case -3 -> Terms.ALBATROSS;
-            case -2 -> Terms.EAGLE;
-            case -1 -> Terms.BIRDIE;
-            case 0 -> Terms.PAR;
-            case 1 -> Terms.BOGEY;
-            case 2 -> Terms.DOUBLE_BOGEY;
-            default -> Terms.TRIPLE_BOGEY_OR_WORSE;
-        };
+    @Override
+    public String toString() {
+        return "Hole{" +
+                "holeNumber=" + holeNumber +
+                ", strokes=" + strokes +
+                ", putts=" + putts +
+                ", chips=" + chips +
+                ", penalties=" + penalties +
+                ", greenInRegulation=" + greenInRegulation +
+                ", girMiss=" + girMiss +
+                ", fairwayHit=" + fairwayHit +
+                ", fhMiss=" + fhMiss +
+                ", par=" + par +
+                ", scoreResult=" + scoreResult +
+                '}';
     }
 }
 

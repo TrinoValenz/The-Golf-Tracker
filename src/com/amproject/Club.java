@@ -1,15 +1,12 @@
 package com.amproject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Club {
     private String name;
-    private List<Double> trackedDistance;
+    private List<Double> trackedDistances = new ArrayList<>();
 
-    public Club(String name, List<Double> trackedDistance) {
-        this.name = name;
-        this.trackedDistance = trackedDistance;
-    }
     public Club(String name) {
         this.name = name;
     }
@@ -23,10 +20,10 @@ public class Club {
     }
 
     public List<Double> getTrackedDistance() {
-        return trackedDistance;
+        return trackedDistances;
     }
 
     public void setTrackedDistance(List<Double> trackedDistance) {
-        this.trackedDistance = trackedDistance;
+        this.trackedDistances = trackedDistance;
     }
 }
