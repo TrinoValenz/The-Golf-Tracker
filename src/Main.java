@@ -22,10 +22,7 @@ public class Main {
         ArrayList<Round> rounds = new ArrayList<>();
         rounds.add(riverRound);
 
-        // add club distance for driver
-        ArrayList<Double> driverTracking = new ArrayList<>();
-        driverTracking.add(268.0);
-        bola.getGolfBag().getClub("Driver").setTrackedDistance(driverTracking);
+
 
         //create holes
         for(int i = 1; i < 19; i++) {
@@ -52,5 +49,11 @@ public class Main {
         System.out.println(bola.toString());
         bola.getGolfBag().removeClub("7 wood");
         System.out.println(bola.toString());
+
+        bola.getGolfBag().getClub("Driver").setTrackedDistance(312);
+        bola.getGolfBag().getClub("Driver").setTrackedDistance(279);
+        System.out.println(bola.getGolfBag().getClub("Driver").getTrackedDistance());
+        bola.getGolfBag().getClub("Driver").calculateAverage();
+        System.out.println(bola.getGolfBag().getClub("Driver").getAverageDistance());
     }
 }

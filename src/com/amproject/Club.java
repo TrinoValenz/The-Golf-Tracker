@@ -5,7 +5,8 @@ import java.util.List;
 
 public class Club {
     private String name;
-    private List<Double> trackedDistances = new ArrayList<>();
+    private List<Integer> trackedDistances = new ArrayList<>();
+    private double averageDistance;
 
     public Club(String name) {
         this.name = name;
@@ -19,13 +20,24 @@ public class Club {
         this.name = name;
     }
 
-    public List<Double> getTrackedDistance() {
+    public List<Integer> getTrackedDistance() {
         return trackedDistances;
     }
 
-    public void setTrackedDistance(List<Double> trackedDistance) {
-        this.trackedDistances = trackedDistance;
+    public void setTrackedDistance(int distance) {
+        trackedDistances.add(distance);
     }
 
+    public void calculateAverage(){
+        int total = 0;
+         for(int distance: trackedDistances){
+            total += distance;
+        }
+         averageDistance = (double) total / trackedDistances.size();
 
+    }
+
+    public double getAverageDistance() {
+        return averageDistance;
+    }
 }
