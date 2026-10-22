@@ -48,7 +48,9 @@ public class Main {
         bola.setRounds(rounds);
         System.out.println(riverRound.toString());
         System.out.println(bola.toString());
-
-
+        bola.getGolfBag().addClub("7 wood");
+        System.out.println(bola.toString());
+        bola.getGolfBag().removeClub("7 wood");
+        System.out.println(bola.toString());
     }
 }

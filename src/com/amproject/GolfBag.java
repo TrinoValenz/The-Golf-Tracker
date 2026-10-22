@@ -18,7 +18,6 @@ public class GolfBag {
     public Club getClub(String clubName) {
         for (Club club : clubs) {
            if(club.getName().equals(clubName)) {
-               System.out.println("Found it");
                return club;
            }
         }
@@ -48,4 +47,20 @@ public class GolfBag {
         }
         return bagList;
     }
+
+    public void addClub(String name){
+        Club club = new Club(name);
+        clubs.add(club);
+    }
+
+    public void removeClub(String name){
+        for (Club club : clubs) {
+            if(club.getName().equals(name)) {
+                clubs.remove(club);
+                break;
+            }
+        }
+    }
+
+
 }

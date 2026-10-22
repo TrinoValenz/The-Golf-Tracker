@@ -26,4 +26,6 @@ public class Club {
     public void setTrackedDistance(List<Double> trackedDistance) {
         this.trackedDistances = trackedDistance;
     }
+
+
 }
