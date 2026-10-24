@@ -1,5 +1,9 @@
 package com.amproject;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringJoiner;
+
 public class Hole {
     private int holeNumber;
     private int strokes;
@@ -12,6 +16,7 @@ public class Hole {
     private Misses fhMiss;
     private int par;
     private Terms scoreResult;
+    private List<Club> clubList = new ArrayList<>();
 
     public Hole(int holeNumber, int strokes, int putts, int chips, int penalties, boolean greenInRegulation, Misses girMiss, boolean fairwayHit, Misses fhMiss, int par) {
         this.holeNumber = holeNumber;
@@ -141,21 +146,81 @@ public class Hole {
         }
     }
 
+    public List<Club> getClubList() {
+        return clubList;
+    }
+
+    private String getClubNamesForDisplay() {
+        if (clubList == null || clubList.isEmpty()) {
+            return "None recorded";
+        }
+
+        StringJoiner names = new StringJoiner(", ");
+
+        for (Club club : clubList) {
+            if (club != null
+                    && club.getName() != null
+                    && !club.getName().isBlank()) {
+                names.add(club.getName());
+            }
+        }
+
+        return names.length() == 0
+                ? "None recorded"
+                : names.toString();
+    }
+
     @Override
     public String toString() {
-        return "Hole{" +
-                "holeNumber=" + holeNumber +
-                ", strokes=" + strokes +
-                ", putts=" + putts +
-                ", chips=" + chips +
-                ", penalties=" + penalties +
-                ", greenInRegulation=" + greenInRegulation +
-                ", girMiss=" + girMiss +
-                ", fairwayHit=" + fairwayHit +
-                ", fhMiss=" + fhMiss +
-                ", par=" + par +
-                ", scoreResult=" + scoreResult +
-                '}';
+        String result = "Not scored";
+
+        if (par > 0 && strokes > 0) {
+            setScoreResult();
+
+            if (scoreResult != null) {
+                result = scoreResult.name().replace('_', ' ');
+            }
+        }
+
+        String parText = par > 0 ? String.valueOf(par) : "-";
+        String strokesText = strokes > 0
+                ? String.valueOf(strokes)
+                : "-";
+
+        String girMissText = girMiss == null
+                ? "-"
+                : girMiss.name().replace('_', ' ');
+
+        String fairwayMissText = fhMiss == null
+                ? "-"
+                : fhMiss.name().replace('_', ' ');
+
+        String separator = "-".repeat(46);
+
+        return String.format(
+                "%s%n" +
+                        "HOLE %02d%n" +
+                        "Par: %s | Strokes: %s | Result: %s%n" +
+                        "Putts: %d | Chips: %d | Penalties: %d%n" +
+                        "GIR: %s | GIR Miss: %s%n" +
+                        "Fairway Hit: %s | Fairway Miss: %s%n" +
+                        "Clubs Used: %s%n" +
+                        "%s",
+                separator,
+                holeNumber,
+                parText,
+                strokesText,
+                result,
+                putts,
+                chips,
+                penalties,
+                greenInRegulation ? "Yes" : "No",
+                girMissText,
+                fairwayHit ? "Yes" : "No",
+                fairwayMissText,
+                getClubNamesForDisplay(),
+                separator
+        );
     }
 }
 
