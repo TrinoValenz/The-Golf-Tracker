@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GolfBag {
-    private List<Club> clubs;
+    private List<Club> clubs = new ArrayList<>();
 
     public GolfBag(List<Club> clubs) {
         this.clubs = clubs;
@@ -45,6 +45,7 @@ public class GolfBag {
             bagList += clubs.get(i).getName();
             bagList += ",";
         }
+        bagList = bagList.substring(0,bagList.length()-1);
         return bagList;
     }
 

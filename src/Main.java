@@ -1,59 +1,50 @@
-import com.amproject.GolfBag;
 import com.amproject.Golfer;
-import com.amproject.Hole;
-import com.amproject.Round;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //create new golfer named bola
-        Golfer bola = new Golfer("Bola");
-        //created golf bag
-        GolfBag golfBag = new GolfBag();
-        //fill golf bag with standard 14 set and set it to golfer
-        golfBag.fillStandardBag();
-        bola.setGolfBag(golfBag);
+        Scanner scn = new Scanner(System.in);
 
-        //creat round object and assign to Bola golfer
-        LocalDate date = LocalDate.of(2026,10,11);
-        Round riverRound = new Round("Pecan Valley River", date, 68.8,118);
-        ArrayList<Round> rounds = new ArrayList<>();
-        rounds.add(riverRound);
-
-
-
-        //create holes
-        for(int i = 1; i < 19; i++) {
-            Hole temp = new Hole(i);
-            riverRound.getHoles().add(temp);
+        // Get golfer and initiate golfer object
+        System.out.print("Enter golfer name: ");
+        String consoleCommand = scn.nextLine();
+        Golfer golfer = new Golfer(consoleCommand);
+        // prompt user for adding clubs to golf bag
+        System.out.println("Do you want to add a standard golf bag or add your own clubs?");
+        System.out.print("Press 1 for standard or 2 to add your own clubs ");
+        consoleCommand = scn.nextLine();
+        //add standard clubs to golf bag
+        if(consoleCommand.equals("1")){
+            golfer.getGolfBag().fillStandardBag();
+        } else {
+            // while loop to add manually add clubs to golf bag
+            while(!consoleCommand.equals("Q") && !consoleCommand.equals("q")){
+                System.out.print("Enter golf club name or enter Q when finished: ");
+                consoleCommand = scn.nextLine();
+                if(!consoleCommand.equals("Q") && !consoleCommand.equals("q")){
+                    golfer.getGolfBag().addClub(consoleCommand);
+                }
+            }
         }
-        //add info fpr hole 1
-        riverRound.getHoles().get(0).setStrokes(5);
-        riverRound.getHoles().get(0).setPutts(0);
-        riverRound.getHoles().get(0).setChips(2);
-        riverRound.getHoles().get(0).setGreenInRegulation(true);
-        riverRound.getHoles().get(0).setFairwayHit(true);
-        riverRound.getHoles().get(0).setPar(4);
-        riverRound.getHoles().get(0).setScoreResult();
+        //print golf bag
+        System.out.println(golfer.getName() + "'s golf bag: ");
+        System.out.println(golfer.getGolfBag());
+;
+        while (!consoleCommand.equals("Q")) {
 
-        riverRound.setScore();
+        }
 
 
-        //Test
-        bola.setRounds(rounds);
-        System.out.println(riverRound.toString());
-        System.out.println(bola.toString());
-        bola.getGolfBag().addClub("7 wood");
-        System.out.println(bola.toString());
-        bola.getGolfBag().removeClub("7 wood");
-        System.out.println(bola.toString());
 
-        bola.getGolfBag().getClub("Driver").setTrackedDistance(312);
-        bola.getGolfBag().getClub("Driver").setTrackedDistance(279);
-        System.out.println(bola.getGolfBag().getClub("Driver").getTrackedDistance());
-        bola.getGolfBag().getClub("Driver").calculateAverage();
-        System.out.println(bola.getGolfBag().getClub("Driver").getAverageDistance());
+
     }
+
+
+    public static String menu(){
+        return null;
+    }
+
+
+
 }

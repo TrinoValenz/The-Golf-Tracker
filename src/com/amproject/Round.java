@@ -12,7 +12,7 @@ public class Round {
     private int score;
     private int slope;
     private double rating;
-    private List<Club> clubs;
+    private List<Club> clubs = new ArrayList<>();;
     private int adjustedGrossScore;
     private double pccAdjustment = 0.0;
 
@@ -99,12 +99,14 @@ public class Round {
     public Club getClub(String clubName) {
         for (Club club : clubs) {
             if(club.getName().equals(clubName)) {
-                System.out.println("Found it");
                 return club;
             }
         }
         return null;
     }
+
+
+    //methods for handicap
     public int getAdjustedGrossScore() {
         return adjustedGrossScore;
     }
@@ -142,6 +144,8 @@ public class Round {
         return Math.round(differential * 10.0) / 10.0;
     }
 
+
+    //display output format
     private static String fit(String value, int maxLength) {
         if (value == null || value.isBlank()) {
             return "-";
